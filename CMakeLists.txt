@@ -30,7 +30,6 @@ add_definitions(-DBUILDING_ROS2)
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 find_package(ament_cmake_auto REQUIRED)
-find_package(livox_sdk2_vendor REQUIRED)
 find_package(PCL REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(builtin_interfaces REQUIRED)
@@ -55,13 +54,7 @@ rosidl_generate_interfaces(${LIVOX_INTERFACES}
   LIBRARY_NAME ${PROJECT_NAME}
 )
 
-## make sure the livox_lidar_sdk_shared library is installed
-find_library(LIVOX_LIDAR_SDK_LIBRARY liblivox_lidar_sdk_shared.so /usr/local/lib REQUIRED)
-
-##
-find_path(LIVOX_LIDAR_SDK_INCLUDE_DIR
-  NAMES "livox_lidar_api.h" "livox_lidar_def.h"
-  REQUIRED)
+# include_directories("../livox_sdk2_vendor")
 
 ## PCL library
 link_directories(${PCL_LIBRARY_DIRS})
@@ -100,7 +93,7 @@ target_link_libraries(${PROJECT_NAME} "${cpp_typesupport_target}")
 target_include_directories(${PROJECT_NAME} PUBLIC
   ${PCL_INCLUDE_DIRS}
   ${APR_INCLUDE_DIRS}
-  ${LIVOX_LIDAR_SDK_INCLUDE_DIR}
+  # ${LIVOX_LIDAR_SDK_INCLUDE_DIR}
   ${LIVOX_INTERFACES_INCLUDE_DIRECTORIES}   # for custom msgs
   3rdparty
   src
@@ -108,7 +101,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 
 # link libraries
 target_link_libraries(${PROJECT_NAME}
-  ${LIVOX_LIDAR_SDK_LIBRARY}
+  # ${LIVOX_LIDAR_SDK_LIBRARY}
   ${LIVOX_INTERFACE_TARGET}   # for custom msgs
   ${PPT_LIBRARY}
   ${Boost_LIBRARY}
