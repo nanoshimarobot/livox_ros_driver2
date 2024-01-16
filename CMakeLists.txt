@@ -102,6 +102,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 # link libraries
 target_link_libraries(${PROJECT_NAME}
   # ${LIVOX_LIDAR_SDK_LIBRARY}
+  ${CMAKE_SOURCE_DIR}/../../install/livox_sdk2_vendor/lib/liblivox_lidar_sdk_shared.so
   ${LIVOX_INTERFACE_TARGET}   # for custom msgs
   ${PPT_LIBRARY}
   ${Boost_LIBRARY}
